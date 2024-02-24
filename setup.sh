@@ -101,8 +101,7 @@ ufw allow https
 apt install -y coturn
 systemctl restart matrix-synapse.service
 
-register_new_matrix_user -u @$ADMINUSER -p @$ADMINPASS -a -c /etc/matrix-synapse/homeserver.yaml http://localhost:8008
-
+register_new_matrix_user -u $ADMINUSER -p $ADMINPASS -a -c /etc/matrix-synapse/homeserver.yaml http://localhost:8008
 
 #echo 'deb https://download.jitsi.org stable/' >> /etc/apt/sources.list.d/jitsi-stable.list
 #wget -qO -  https://download.jitsi.org/jitsi-key.gpg.key | sudo apt-key add -
