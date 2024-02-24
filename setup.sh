@@ -59,7 +59,7 @@ matrix_synapse_federation_port_enabled: false
 registration_shared_secret: "$AUTHSECRET"
 search_all_users: true
 prefer_local_users: true
-turn_uris: ["turn:v?transport=udp","turn:x.$DOMAIN?transport=tcp"]
+turn_uris: ["turn:x.$DOMAIN?transport=udp","turn:x.$DOMAIN?transport=tcp"]
 turn_shared_secret: "$AUTHSECRET"
 turn_user_lifetime: 86400000
 admin_users:
