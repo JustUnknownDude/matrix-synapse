@@ -119,7 +119,8 @@ realm=x.$DOMAIN
 # consider whether you want to limit the quota of relayed streams per user (or total) to avoid risk of DoS.
 user-quota=100 # 4 streams per video call, so 100 streams = 25 simultaneous relayed calls per user.
 total-quota=1200
-no-tcp-relay # VoIP traffic is all UDP. There is no reason to let users connect to arbitrary TCP endpoints via the relay.
+no-tcp-relay
+# VoIP traffic is all UDP. There is no reason to let users connect to arbitrary TCP endpoints via the relay.
 syslog
 no-multicast-peers
 EOF
