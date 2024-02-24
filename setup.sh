@@ -74,7 +74,7 @@ server {
 server_name x.$DOMAIN;
 location / {
 	proxy_pass http://localhost:8008;
-	proxy_set_header X-Forwarded-For $remote_addr;
+	proxy_set_header X-Forwarded-For \$remote_addr;
 			}
 			
 listen 80;
@@ -89,11 +89,11 @@ apt install -y postgresql
 
 su postgres -c "createuser matrix"
 su postgres -c "createdb --encoding=UTF8 --locale=C --template=template0 --owner=matrix matrix"
-psql -c "ALTER USER matrix with PASSWORD '$PASSWD';"
+su postgres -c "psql -c \"ALTER USER matrix WITH PASSWORD '$PASSWD';\""
 echo "Done."
 
-#INSTALL JITSI-MEET COTURN
-echo "INSTALL JITSI-MEET COTURN.."
+#INSTALL  COTURN
+echo "INSTALL COTURN.."
 
 apt install -y python3-psycopg2
 ufw allow 8448
@@ -104,10 +104,10 @@ systemctl restart matrix-synapse.service
 register_new_matrix_user -u @$ADMINUSER -p @$ADMINPASS -a -c /etc/matrix-synapse/homeserver.yaml http://localhost:8008
 
 
-echo 'deb https://download.jitsi.org stable/' >> /etc/apt/sources.list.d/jitsi-stable.list
-wget -qO -  https://download.jitsi.org/jitsi-key.gpg.key | sudo apt-key add -
-apt-get update
-apt-get -y install jitsi-meet
+#echo 'deb https://download.jitsi.org stable/' >> /etc/apt/sources.list.d/jitsi-stable.list
+#wget -qO -  https://download.jitsi.org/jitsi-key.gpg.key | sudo apt-key add -
+#apt-get update
+#apt-get -y install jitsi-meet
 mv /etc/turnserver.conf /etc/turnserver.conf.orig
 
 cat << EOF > /etc/turnserver.conf
@@ -191,8 +191,23 @@ echo "Done."
 echo "ELENENT ADMIN PANEL"
 cd /opt
 git clone https://github.com/Awesome-Technologies/synapse-admin.git
+cat << EOF > /opt/synapse-admin/docker-compose.yml
+version: "3"
 
-echo >> "        - REACT_APP_SERVER="https://x.$DOMAIN" /opt/synapse-admin/docker-compose.yml
+services:
+  synapse-admin:
+    container_name: synapse-admin
+    hostname: synapse-admin
+    image: awesometechnologies/synapse-admin:latest
+    build:
+     context: .
+     args:
+      - REACT_APP_SERVER="https://x.$DOMAIN"
+    ports:
+      - "127.0.0.1:8080:80"
+    restart: unless-stopped
+EOF
+
 cd /opt/synapse-admin/
 docker-compose up -d > /dev/null 2>&1
 cat << EOF > /etc/nginx/sites-enabled/xadm.conf
@@ -205,7 +220,7 @@ server {
         #allow your_IP_address; #Allowed IP
         #deny all;
         proxy_pass http://localhost:8088/;
-        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-For \$remote_addr;
     }
 
 }
@@ -223,7 +238,7 @@ server {
 
     location / {
         proxy_pass http://localhost:8090;
-        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-For \$remote_addr;
     }
 
 }
