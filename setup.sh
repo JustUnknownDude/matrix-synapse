@@ -115,7 +115,7 @@ fingerprint
 use-auth-secret
 static-auth-secret=$AUTHSECRET
 #Мы еге генерировали ранее во время настройки Matrix Synapse
-realm=$DOMAIN
+realm=x.$DOMAIN
 # consider whether you want to limit the quota of relayed streams per user (or total) to avoid risk of DoS.
 user-quota=100 # 4 streams per video call, so 100 streams = 25 simultaneous relayed calls per user.
 total-quota=1200
