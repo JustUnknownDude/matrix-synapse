@@ -110,8 +110,8 @@ server {
 
     location /_matrix {
         proxy_pass http://localhost:8008;
-        proxy_set_header X-Forwarded-For $remote_addr;
-        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For \$remote_addr;
+        proxy_set_header Host \$host;
     }
 }
 EOF
