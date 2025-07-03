@@ -43,14 +43,6 @@ listeners:
     resources:
       - names: [federation]
         compress: false
-  - port: 8008
-    tls: false
-    type: http
-    x_forwarded: true
-    bind_addresses: ['127.0.0.1']
-    resources:
-      - names: [client]
-        compress: true
 database:
   name: psycopg2
   txn_limit: 10000
