@@ -28,4 +28,8 @@ To install, log into your server via ssh and run the command as root:
 ```
 wget https://raw.githubusercontent.com/JustUnknownDude/matrix-synapse/main/setup.sh && bash setup.sh
 ```
-
+If you need a version with federation enabled use this file:
+```
+wget https://raw.githubusercontent.com/JustUnknownDude/matrix-synapse/main/setup-with-federation.sh && bash setup-with-federation.sh
+```
+P.S. The version with the federation option enabled should work, but I don't have time to test it.
